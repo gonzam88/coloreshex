@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<title>Colores Hexadecimales</title>
+<link rel="icon" href="./icon.png" type="image/icon type">
+ <style>
+ body{
+   font-family: sans-serif;
+   font-size: 18px;
+ }
+  .cuadradoColor{
+    width: 100px;
+    height: 100px;
+  }
+  #coloresContainer{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+  }
+
+  #todoJunto{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+  }
+  #valores{
+    width: 250px;
+  }
+  #cromatico{
+    position: relative;
+  }
+  #cromatico>div{
+    height: 200px;
+    width: 200px;
+    background-blend-mode: screen;
+    mix-blend-mode: screen;
+    border-radius: 50%;
+  }
+  #cromatico .green{
+    position: absolute;
+    top: 100px;
+    left: -70px;
+  }
+  #cromatico .blue{
+    position: absolute;
+    top: 100px;
+    left: 70px;
+  }
+ </style>
+<body>
+  <h1>Colores en Hexadecimal</h1>
+  <p>8 bits por canal: 24 bits total</p>
+  <p>16,777,216 colores posibles</p>
+
+<div id="coloresContainer">
+
+  <div id="redHex" class="container">
+    <input
+      type="range"
+      min="0"
+      v-bind:max="max"
+      v-bind:value="node.sum"
+      v-on:input="onChg($event)">
+    <div>Decimal: {{ node.sum }}</div>
+    <div>Hexadecimal: {{ node.hex }}</div>
+    <div>Binario: {{ node.bin }}</div>
+    Valor Gris
+    <div class="cuadradoColor" v-bind:style="{background: node.greyColor}"></div>
+    Valor Gris teñido a rojo
+    <div class="cuadradoColor" v-bind:style="{background: node.myColor}"></div>
+  </div>
+
+
+
+
+  <div id="greenHex" class="container">
+    <input
+      type="range"
+      min="0"
+      v-bind:max="max"
+      v-bind:value="node.sum"
+      v-on:input="onChg($event)">
+    <div>Decimal: {{ node.sum }}</div>
+    <div>Hexadecimal: {{ node.hex }}</div>
+    <div>Binario: {{ node.bin }}</div>
+    Valor Gris
+    <div class="cuadradoColor" v-bind:style="{background: node.greyColor}"></div>
+    Valor Gris teñido a verde
+    <div class="cuadradoColor" v-bind:style="{background: node.myColor}"></div>
+  </div>
+
+
+    <div id="blueHex" class="container">
+      <input
+        type="range"
+        min="0"
+        v-bind:max="max"
+        v-bind:value="node.sum"
+        v-on:input="onChg($event)">
+      <div>Decimal: {{ node.sum }}</div>
+      <div>Hexadecimal: {{ node.hex }}</div>
+      <div>Binario: {{ node.bin }}</div>
+      Valor Gris
+      <div class="cuadradoColor" v-bind:style="{background: node.greyColor}"></div>
+      Valor Gris teñido a azul
+      <div class="cuadradoColor" v-bind:style="{background: node.myColor}"></div>
+    </div>
+
+</div>
+
+<div id="todoJunto">
+  <div id="valores">
+    R: {{redPercent}}%</br>
+    G: {{greenPercent}}%</br>
+    B: {{bluePercent}}%</br>
+    Hexadecimal: #{{hexadecimal}}</br></br>
+  </div>
+  <div id="cromatico">
+    <div class="red" v-bind:style="{background: redColor}"></div>
+    <div class="green" v-bind:style="{background: greenColor}"></div>
+    <div class="blue" v-bind:style="{background: blueColor}"></div>
+  </div>
+</div>
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+
+
+
+  let redHex = new Vue({
+    el: '#redHex',
+    data () {
+      return {
+        max: 255,
+        node: {
+          sum: 0,
+          hex: 00,
+          bin: 0,
+          greyColor: "#000",
+          myColor: "rgb(0, 0,0)"
+        },
+
+      };
+    },
+    methods: {
+      onChg (e) {
+        this.node.sum = e.target.value;
+        this.node.hex = parseInt(e.target.value).toString(16).toUpperCase();
+        this.node.bin = convertDecimalToBinary(e.target.value);
+        this.node.greyColor = `rgb(${e.target.value}, ${e.target.value}, ${e.target.value})`;
+        this.node.myColor = `rgb(${e.target.value}, 0,0)`;
+      },
+    },
+  });
+
+  let greenHex = new Vue({
+    el: '#greenHex',
+    data () {
+      return {
+        max: 255,
+        node: {
+          sum: 0,
+          hex: 00,
+          bin: 0,
+          greyColor: "#000",
+          myColor: "rgb(0, 0,0)"
+        },
+
+      };
+    },
+    methods: {
+      onChg (e) {
+        this.node.sum = e.target.value;
+        this.node.hex = parseInt(e.target.value).toString(16).toUpperCase();
+        this.node.bin = convertDecimalToBinary(e.target.value);
+        this.node.greyColor = `rgb(${e.target.value}, ${e.target.value}, ${e.target.value})`;
+        this.node.myColor = `rgb(0, ${e.target.value},0)`;
+      },
+    },
+  });
+
+  var blueHex = new Vue({
+    el: '#blueHex',
+    data () {
+      return {
+        max: 255,
+        node: {
+          sum: 0,
+          hex: 00,
+          bin: 0,
+          greyColor: "#000",
+          myColor: "rgb(0, 0,0)"
+        },
+
+      };
+    },
+    methods: {
+      onChg (e) {
+        this.node.sum = e.target.value;
+        this.node.hex = parseInt(e.target.value).toString(16).toUpperCase();
+        this.node.bin = convertDecimalToBinary(e.target.value);
+        this.node.greyColor = `rgb(${e.target.value}, ${e.target.value}, ${e.target.value})`;
+        this.node.myColor = `rgb(0, 0,${e.target.value})`;
+      },
+    },
+  });
+
+
+  let todoJunto = new Vue({
+    el: '#todoJunto',
+    computed: {
+      redPercent: function () {
+        return Math.round(redHex.node.sum / 255 * 100)
+      },
+      greenPercent: function () {
+        return Math.round(greenHex.node.sum / 255 * 100)
+      },
+      bluePercent: function () {
+        return Math.round(blueHex.node.sum / 255 * 100)
+      },
+      hexadecimal: function(){
+        return `${redHex.node.hex} ${greenHex.node.hex} ${blueHex.node.hex}`;
+      },
+      redColor: function(){
+        return `rgb(${redHex.node.sum}, 0, 0)`;
+      },
+      greenColor: function(){
+        return `rgb(0,${greenHex.node.sum}, 0)`;
+      },
+      blueColor: function(){
+        return `rgb(0, 0, ${blueHex.node.sum})`;
+      }
+
+  },
+
+  })
+
+
+  function convertDecimalToBinary(number){
+      var binary = "";
+      var temp = number;
+
+      while(temp > 0){
+          if(temp % 2 == 0){
+              binary = "0" + binary;
+          }
+          else {
+              binary = "1" + binary;
+          }
+          temp = Math.floor(temp / 2);
+      }
+
+      return binary;
+  }
+</script>
+
+
+</body>
+</html>
